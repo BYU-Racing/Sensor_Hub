@@ -4,7 +4,7 @@
 //Constants must have UNITS in their name and/or description, unless it is not a standard unit.
 //Each constant needs to have a description. 
 
-#define FLOWSENSOR_HZ_PER_LPM 7.5         // Per second, 1 liter per minute, the datasheet says 7.5 clicks per second = 1 liter per minute.
+#define FLOWSENSOR_HZ_PER_LPM 7.5         // Hz per L/min: 7.5 clicks per second = 1 L/min (YF-S201 datasheet)
 #define FLOWSENSOR_WINDOW_MS 1000     // In milliseconds, count clicks for 1000 ms (1 second).
 
 

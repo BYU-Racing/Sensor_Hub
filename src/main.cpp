@@ -23,7 +23,7 @@ unsigned long sensorReadFrequency = 100; //ms between reads
 void setup() {
   Serial.begin(115200);
   //Set the pinmodes for each pin
-flowSensorInit(FLOWSENSOR_PIN);
+  flowSensorInit(FLOWSENSOR_PIN);
   
 
   can1.begin();
