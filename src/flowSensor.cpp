@@ -1,4 +1,4 @@
-#include "sensorname.h"
+#include "flowSensor.h"
 #include <math.h>
 
 float sensorname_voltage(uint8_t pin){ //simply read the voltage of a given sensor pin

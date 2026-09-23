@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "can.h"
-#include "sensorname.h"
-#include "sensorname.cpp"
+#include "flowSensor.h"
+#include "flowSensor.cpp"
 
 // Arduino Pins
 #define SENSORNAME_PIN 16
