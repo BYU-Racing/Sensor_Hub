@@ -1,25 +1,21 @@
-#include "temp_sensor.h"
+#include "sensorname.h"
 #include <math.h>
 
-float temp_sensor_get_voltage(uint8_t pin){
+float sensorname_voltage(uint8_t pin){ //simply read the voltage of a given sensor pin
     float out = analogRead(pin);
-    out = (out/TEENSY_CONSTANT)*TS_VOLTAGE_MAX_CONSTANT;
+    out = (out/READ_VMAX)*MAX_VOLTAGE;
     return(out);
 }
 
-float temp_sensor_get_temp(uint8_t pin,uint8_t mode){
-    float out = temp_sensor_get_voltage(pin);
-    switch (mode)
-    {
-    case 0:
-        out = TS_LOG_CO*log(out)+TS_OFFSET;
-        break;
-    case 1:
-        out = (TS_A_CO*out*out*out)+(TS_B_CO*out*out)+(TS_C_CO*out)+(TS_D_CO);
-        break;
-    default:
-        out = -1;
-        break;
-    }
+
+float sensorname_value_units(uint8_t pin,uint8_t mode){
+    float out = sensorname_voltage(pin);
+    //now do the math you need to to get the correct value.
+    //rename this function as follows:
+    //sensorname: name of the sensor per data sheet
+    //reading: Value in the units requested by the team using the sensor
+    //units: what unit are you using? ex: °C, PSI, meters, rpm, m/s, radians.
+
+
     return(out);
 }

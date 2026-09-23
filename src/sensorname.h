@@ -1,17 +1,18 @@
 #pragma once
 #include <Arduino.h>
+//Define constants in this file
+//Constants must have UNITS in their name and/or description, unless it is not a standard unit.
+//Each constant needs to have a description. 
 
-#define TEENSY_CONSTANT 1023
-#define TS_VOLTAGE_MAX_CONSTANT (3.3 * 2)
-//443 Ohms is probobly the resistor to put in series with the thermistor
-#define TS_LOG_CO -51.3346
-#define TS_OFFSET 81.2540
 
-#define TS_A_CO -4.4382
-#define TS_B_CO 38.0821
-#define TS_C_CO -121.2466
-#define TS_D_CO 174.6725
+#define READ_VMAX 1023 //maximum value from pin read Units: Arduino voltage reading
+#define MAX_VOLTAGE 5  //Input voltage required to get that VMAX Units: voltage
 
-float temp_sensor_get_voltage(uint8_t pin);
+#define read_sensorname = 100; //Define the time between reads
 
-float temp_sensor_get_temp(uint8_t pin,uint8_t mode);
+
+
+
+float sensorname_voltage(uint8_t pin);
+
+float sensorname_reading(uint8_t pin,uint8_t mode);
