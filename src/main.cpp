@@ -1,13 +1,14 @@
 #include <Arduino.h>
 #include "can.h"
 #include "flowSensor.h"
-#include "flowSensor.cpp"
+
+
 
 // Arduino Pins
-#define SENSORNAME_PIN 16
+#define FLOWSENSOR_PIN 16
 
 // Can IDs (check spreadsheet to assign available ids)
-#define SENSORNAME_CAN_ID 0x000 //replace if needed
+#define FLOWSENSOR_CAN_ID 0x000 //replace if needed
 
 // Initialize CAN function
 FlexCAN_T4<CAN2, RX_SIZE_256> can1;
@@ -22,7 +23,7 @@ unsigned long sensorReadFrequency = 100; //ms between reads
 void setup() {
   Serial.begin(115200);
   //Set the pinmodes for each pin
-  pinMode(SENSORNAME_PIN,INPUT);
+  pinMode(FLOWSENSOR_PIN,INPUT);
   
 
   can1.begin();
@@ -36,18 +37,20 @@ void setup() {
 }
 
 void loop() {
+  currentReadTime = millis();
+
   if (currentReadTime - previousReadTime >= sensorReadFrequency){  //Put all code not meant to run constantly here.
     //if your sensor requires a different read frequency or timer, it must be in a different loop.
     previousReadTime = currentReadTime; //Marks this as current read
     
     
-    float sensorname_output_value = sensorname_value_units(SENSORNAME_PIN, 1);
+    float flowSensor_output_value = flowSensor_value_units(FLOWSENSOR_PIN, 1);
     //uncomment this block of code to read things with CAN
     //can1.write(can_format_message(SENSORNAME_CAN_ID, sensorname_output_value));
 
     //Uncomment the block of code to read things with serial monitor
-    //Serial.print("Sensor Unit:");
-    //Serial.println(sensorname_output_value);
+    Serial.print("Flow Sensor Unit:");
+    Serial.println(flowSensor_output_value);
 
 
 
