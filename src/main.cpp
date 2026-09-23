@@ -23,7 +23,7 @@ unsigned long sensorReadFrequency = 100; //ms between reads
 void setup() {
   Serial.begin(115200);
   //Set the pinmodes for each pin
-  pinMode(FLOWSENSOR_PIN,INPUT);
+flowSensorInit(FLOWSENSOR_PIN);
   
 
   can1.begin();
@@ -44,12 +44,12 @@ void loop() {
     previousReadTime = currentReadTime; //Marks this as current read
     
     
-    float flowSensor_output_value = flowSensor_value_units(FLOWSENSOR_PIN, 1);
+    float flowSensor_output_value = flowSensor_rate_lpm();
     //uncomment this block of code to read things with CAN
-    //can1.write(can_format_message(SENSORNAME_CAN_ID, sensorname_output_value));
+    //can1.write(can_format_message(FLOWSENSOR_CAN_ID, flowSensor_output_value));
 
     //Uncomment the block of code to read things with serial monitor
-    Serial.print("Flow Sensor Unit:");
+    Serial.print("Flow L/min: ");
     Serial.println(flowSensor_output_value);
 
 

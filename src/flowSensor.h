@@ -4,15 +4,11 @@
 //Constants must have UNITS in their name and/or description, unless it is not a standard unit.
 //Each constant needs to have a description. 
 
-
-#define READ_VMAX 1023 //maximum value from pin read Units: Arduino voltage reading
-#define MAX_VOLTAGE 5  //Input voltage required to get that VMAX Units: voltage
-
-#define read_flowSensor = 100; //Define the time between reads
+#define FLOWSENSOR_HZ_PER_LPM 7.5         // Per second, 1 liter per minute, the datasheet says 7.5 clicks per second = 1 liter per minute.
+#define FLOWSENSOR_WINDOW_MS 1000     // In milliseconds, count clicks for 1000 ms (1 second).
 
 
 
-
-float flowSensor_voltage(uint8_t pin);
-
-float flowSensor_value_units(uint8_t pin,uint8_t mode);
+void flowSensorInit(uint8_t pin);
+void flowSensor_isr();
+float flowSensor_rate_lpm();
