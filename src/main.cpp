@@ -1,14 +1,17 @@
 #include <Arduino.h>
 #include "can.h"
 #include "flowSensor.h"
-
-
+#include "pressureSensor.h"
 
 // Arduino Pins
-#define FLOWSENSOR_PIN 16
+#define COOLANT_FLOW_PIN 16
+#define COOLANT_TEMP_PIN 17
+#define COOLANT_PRESSURE_PIN 18
 
 // Can IDs (check spreadsheet to assign available ids)
-#define FLOWSENSOR_CAN_ID 0x000 //replace if needed
+#define COOLANT_FLOW_CAN_ID 0x000 //replace
+#define COOLANT_TEMP_CAN_ID 0x000 //replace
+#define COOLANT_PRESSURE_CAN_ID 0x000 //replace
 
 // Initialize CAN function
 FlexCAN_T4<CAN2, RX_SIZE_256> can1;
@@ -23,7 +26,8 @@ unsigned long sensorReadFrequency = 100; //ms between reads
 void setup() {
   Serial.begin(115200);
   //Set the pinmodes for each pin
-  flowSensorInit(FLOWSENSOR_PIN);
+  coolantFlow_init(COOLANT_FLOW_PIN);
+  coolantPressure_init(COOLANT_PRESSURE_PIN);
   
 
   can1.begin();
@@ -44,13 +48,18 @@ void loop() {
     previousReadTime = currentReadTime; //Marks this as current read
     
     
-    float flowSensor_output_value = flowSensor_rate_lpm();
+    float flow_lpm = coolantFlow_lpm();
+    float pressure_bar = coolantPressure_bar();
+  
     //uncomment this block of code to read things with CAN
-    //can1.write(can_format_message(FLOWSENSOR_CAN_ID, flowSensor_output_value));
+    //can1.write(can_format_message(COOLANT_FLOW_CAN_ID, flow_lpm));
+    //can1.write(can_format_message(COOLANT_PRESSURE_CAN_ID, pressure_bar));
 
     //Uncomment the block of code to read things with serial monitor
     Serial.print("Flow L/min: ");
-    Serial.println(flowSensor_output_value);
+    Serial.println(flow_lpm);
+    Serial.print("Pressure bar: ");
+    Serial.println(pressure_bar);  // -999 means sensor fault (broken wire or short)
 
 
 

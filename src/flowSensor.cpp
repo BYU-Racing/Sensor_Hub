@@ -13,24 +13,24 @@ static float lastFlow_lpm = 0;             // Most recent flow rate, returned be
 
 // Runs automatically every time the signal pin goes LOW -> HIGH (one pulse).
 // Interrupts should be as short as possible, so all it does is count.
-void flowSensor_isr() {
+void coolantFlow_isr() {
     pulseCount++;
 }
 
-void flowSensorInit(uint8_t pin) {
+void coolantFlow_init(uint8_t pin) {
     // Plain INPUT: the voltage divider sets the voltage, so no internal pull-up.
     pinMode(pin, INPUT);
-    // Call flowSensor_isr on every rising edge, so no pulses are missed
+    // Call coolantFlow_isr on every rising edge, so no pulses are missed
     // even while the main loop is busy doing something else.
-    attachInterrupt(digitalPinToInterrupt(pin), flowSensor_isr, RISING);
+    attachInterrupt(digitalPinToInterrupt(pin), coolantFlow_isr, RISING);
 }
 
-float flowSensor_rate_lpm() {
+float coolantFlow_lpm() {
     unsigned long now_ms = millis();
 
     // Not enough time has passed to count a full window yet,
     // so return the last value instead of calculating from too few pulses.
-    if ((now_ms - lastCalcTime_ms) < FLOWSENSOR_WINDOW_MS) {
+    if ((now_ms - lastCalcTime_ms) < COOLANT_FLOW_WINDOW_MS) {
         return lastFlow_lpm;
     }
 
@@ -42,11 +42,11 @@ float flowSensor_rate_lpm() {
     interrupts();
 
     // Pulses per second -> liters per minute.
-    // Uses the real elapsed time rather than FLOWSENSOR_WINDOW_MS, since this
+    // Uses the real elapsed time rather than COOLANT_FLOW_WINDOW_MS, since this
     // function may be called a little after the window ends.
     float elapsed_s = (now_ms - lastCalcTime_ms) / 1000.0;
     float pulsesPerSecond = pulses / elapsed_s;
-    float flow_lpm = pulsesPerSecond / FLOWSENSOR_HZ_PER_LPM;
+    float flow_lpm = pulsesPerSecond / COOLANT_FLOW_HZ_PER_LPM;
 
     lastFlow_lpm = flow_lpm;
     lastCalcTime_ms = now_ms;
