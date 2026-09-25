@@ -16,7 +16,7 @@ FloatBytes fb;
 //Define values for read time
 unsigned long currentReadTime = 0; //current ms 
 unsigned long previousReadTime = 0; //ms value of previous reads
-unsigned long sensorReadFrequency = 100; //ms between reads
+unsigned long sensorReadFrequencyA = 100; //ms between reads
 
 
 void setup() {
@@ -36,12 +36,12 @@ void setup() {
 }
 
 void loop() {
-  if (currentReadTime - previousReadTime >= sensorReadFrequency){  //Put all code not meant to run constantly here.
+  if (currentReadTime - previousReadTime >= sensorReadFrequencyA){  //Put all code not meant to run constantly here.
     //if your sensor requires a different read frequency or timer, it must be in a different loop.
     previousReadTime = currentReadTime; //Marks this as current read
     
     
-    float sensorname_output_value = sensorname_value_units(SENSORNAME_PIN, 1);
+    float sensorname_output_value = sensorname_convertdata(SENSORNAME_PIN, 1);
     //uncomment this block of code to read things with CAN
     //can1.write(can_format_message(SENSORNAME_CAN_ID, sensorname_output_value));
 
