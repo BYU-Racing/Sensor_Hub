@@ -1,45 +1,42 @@
 #include "imu.h"
 
+// Global variables for IMU data
+imu_data_t *imu_data_raw_bmi;
+imu_data_t *imu_data_bmi;
+imu_data_t *imu_data_a2c;
 
-imu_data_t *imu_data_raw;
-imu_data_t *imu_data;
-
-int32_t imu_calibrate()
-{
-    return 0;
-}
-
-int32_t imu_init()
-{
-    imu_data_raw = (imu_data_t *)malloc(sizeof(imu_data_t));
-    imu_data = (imu_data_t *)malloc(sizeof(imu_data_t));
-    if (!imu_data_raw)
-    {
-        printf("Error IMU_INIT: Failed to allocate memory for raw IMU data\n");
+int32_t imu_init_a2c()
+{   // Initialize the A2C IMU
+    imu_data_a2c = (imu_data_t *)malloc(sizeof(imu_data_t));
+    if (imu_data_a2c == NULL)
+    {   // Check if memory allocation was successful
+        printf("Error: IMU_INIT_A2C");
         return 1;
     }
-    if (!imu_data)
-    {
-        printf("Error IMU_INIT: Failed to allocate memory for processed IMU data\n");
-        free(imu_data_raw);
+    return 0; // Return 0 if successful
+}
+
+int32_t imu_deinit_a2c() 
+{   // Deinitialize the A2C IMU
+    free(imu_data_a2c);
+    return 0; // Return 0 if successful
+}
+
+int32_t imu_init_bmi()
+{   // Initialize the BMI IMU
+    imu_data_raw_bmi = (imu_data_t *)malloc(sizeof(imu_data_t));
+    imu_data_bmi = (imu_data_t *)malloc(sizeof(imu_data_t));
+    if (imu_data_raw_bmi == NULL || imu_data_bmi == NULL)
+    {   // check if memory allocation was successful
+        printf("Error: IMU_INIT_BMI");
         return 1;
     }
-    return 0;
+    return 0; // Return 0 if successful
 }
 
-int32_t imu_deinit()
-{
-    free(imu_data_raw);
-    free(imu_data);
-    return 0;
+int32_t imu_deinit_bmi()
+{   // Deinitialize the BMI IMU
+    free(imu_data_raw_bmi);
+    free(imu_data_bmi);
+    return 0; // Return 0 if successful
 }
-
-int32_t imu_read(imu_data_t *data)
-{   // Read processed data from the IMU
-
-    
-    
-    
-    return 0;
-}
-
